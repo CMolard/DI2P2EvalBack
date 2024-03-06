@@ -1,5 +1,6 @@
 ﻿using DI2P2EvalBack.DAL.Contracts;
 using DI2P2EvalBack.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DI2P2EvalBack.DAL
 {
@@ -18,6 +19,11 @@ namespace DI2P2EvalBack.DAL
 			await contextModels.SaveChangesAsync();
 
 			return eventEntry.Entity;
+		}
+
+		public async Task<List<Event>> GetAllEvents()
+		{
+			return await contextModels.Events.ToListAsync();
 		}
 	}
 }

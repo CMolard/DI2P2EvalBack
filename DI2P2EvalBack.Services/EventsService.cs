@@ -33,5 +33,10 @@ namespace DI2P2EvalBack.Services
 
 			return await eventsRepository.AddEvent(eventToSaved);
 		}
+
+		public async Task<List<Event>> GetAllEvents()
+		{
+			return await eventsRepository.GetAllEvents();
+		}
 	}
 }

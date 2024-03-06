@@ -10,5 +10,7 @@ namespace DI2P2EvalBack.DAL.Contracts
 	public interface IEventsRepository
 	{
 		Task<Event> AddEvent(Event newEvent);
+
+		Task<List<Event>> GetAllEvents();
 	}
 }

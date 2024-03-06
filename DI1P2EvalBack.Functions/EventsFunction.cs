@@ -60,5 +60,31 @@ namespace DI1P2EvalBack.Functions
 				return response;
 			}
         }
-    }
+
+		[Function("GetEventsFunction")]
+		public async Task<HttpResponseData> GetEvents([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Events")] HttpRequestData req)
+		{
+			logger.LogInformation("C# HTTP trigger function processed a get all events request.");
+
+			try
+			{
+				List<Event> events = await eventsService.GetAllEvents();
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.Created);
+				await response.WriteAsJsonAsync(events);
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				this.logger.LogError("Error : {ex.Message}", ex.Message);
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.InternalServerError);
+				response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+				response.Body = new MemoryStream(Encoding.UTF8.GetBytes($"Error {ex.Message}"));
+
+				return response;
+			}
+		}
+	}
 }
