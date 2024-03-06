@@ -11,6 +11,16 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.1.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.2" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.16" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DI2P2EvalBack.DAL\DI2P2EvalBack.DAL.csproj" />
+    <ProjectReference Include="..\DI2P2EvalBack.Services.Contracts\DI2P2EvalBack.Services.Contracts.csproj" />
+    <ProjectReference Include="..\DI2P2EvalBack.Services\DI2P2EvalBack.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
