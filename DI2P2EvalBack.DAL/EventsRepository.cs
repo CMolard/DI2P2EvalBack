@@ -1,6 +1,7 @@
 ﻿using DI2P2EvalBack.DAL.Contracts;
 using DI2P2EvalBack.Models;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DI2P2EvalBack.DAL
 {
@@ -19,6 +20,12 @@ namespace DI2P2EvalBack.DAL
 			await contextModels.SaveChangesAsync();
 
 			return eventEntry.Entity;
+		}
+
+		public async Task DeleteEvent(Event removedEvent)
+		{
+			this.contextModels.Events.Remove(removedEvent);
+			await this.contextModels.SaveChangesAsync();
 		}
 
 		public async Task<List<Event>> GetAllEvents()

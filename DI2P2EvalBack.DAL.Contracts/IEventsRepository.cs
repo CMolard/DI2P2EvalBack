@@ -16,5 +16,7 @@ namespace DI2P2EvalBack.DAL.Contracts
 		Task<Event> UpdateEvent(Event updatedEvent);
 
 		Task<Event?> GetEventById(int id);
+
+		Task DeleteEvent(Event removedEvent);
 	}
 }

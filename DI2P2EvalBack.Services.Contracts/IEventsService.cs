@@ -15,5 +15,7 @@ namespace DI2P2EvalBack.Services.Contracts
 		Task<List<Event>> GetAllEvents();
 
 		Task<Event> UpdateEvent(Event updatedEvent);
+
+		Task DeleteEvent(int id);
 	}
 }

@@ -39,6 +39,13 @@ namespace DI2P2EvalBack.Services
 			return await eventsRepository.GetAllEvents();
 		}
 
+		public async Task DeleteEvent(int id)
+		{
+			Event deletedEvent = await GetEventById(id);
+
+			await eventsRepository.DeleteEvent(deletedEvent);
+		}
+
 		public async Task<Event> UpdateEvent(Event updatedEvent)
 		{
 			if (updatedEvent == null) throw new ArgumentNullException(nameof(updatedEvent));
@@ -48,12 +55,18 @@ namespace DI2P2EvalBack.Services
 			if (string.IsNullOrEmpty(updatedEvent.Description)) throw new ArgumentNullException(nameof(updatedEvent.Description));
 			if (string.IsNullOrEmpty(updatedEvent.Location)) throw new ArgumentNullException(nameof(updatedEvent.Location));
 			if (updatedEvent.Date == null) throw new ArgumentNullException(nameof(updatedEvent.Date));
+			await GetEventById(updatedEvent.Id.Value);
 
-			Event? existingEvent = await eventsRepository.GetEventById(updatedEvent.Id.Value);
+			return await eventsRepository.UpdateEvent(updatedEvent);
+		}
+
+		private async Task<Event> GetEventById(int id)
+		{
+			Event? existingEvent = await eventsRepository.GetEventById(id);
 
 			if (existingEvent is null) throw new Exception("The event does not exist");
 
-			return await eventsRepository.UpdateEvent(updatedEvent);
+			return existingEvent;
 		}
 	}
 }

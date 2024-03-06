@@ -125,5 +125,30 @@ namespace DI1P2EvalBack.Functions
 				return response;
 			}
 		}
+
+		[Function("DeleteEventFunction")]
+		public async Task<HttpResponseData> DeletesEvent([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "Events/{id}")] HttpRequestData req, int id)
+		{
+			logger.LogInformation("C# HTTP trigger function processed a delete event request.");
+
+			try
+			{
+				await eventsService.DeleteEvent(id);
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.NoContent);
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				this.logger.LogError("Error : {ex.Message}", ex.Message);
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.InternalServerError);
+				response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+				response.Body = new MemoryStream(Encoding.UTF8.GetBytes($"Error {ex.Message}"));
+
+				return response;
+			}
+		}
 	}
 }
