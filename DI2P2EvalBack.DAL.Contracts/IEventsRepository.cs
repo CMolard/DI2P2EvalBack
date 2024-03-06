@@ -12,5 +12,9 @@ namespace DI2P2EvalBack.DAL.Contracts
 		Task<Event> AddEvent(Event newEvent);
 
 		Task<List<Event>> GetAllEvents();
+
+		Task<Event> UpdateEvent(Event updatedEvent);
+
+		Task<Event?> GetEventById(int id);
 	}
 }

@@ -86,5 +86,44 @@ namespace DI1P2EvalBack.Functions
 				return response;
 			}
 		}
+
+		[Function("UpdateEventsFunctions")]
+		public async Task<HttpResponseData> UpdatesEvents([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "Events")] HttpRequestData req)
+		{
+			logger.LogInformation("C# HTTP trigger function processed an update event request.");
+
+			try
+			{
+				Event updateEvent = null;
+
+				using (var reader = new StreamReader(req.Body, Encoding.UTF8))
+				{
+					string requestBody = await reader.ReadToEndAsync();
+
+					updateEvent = JsonSerializer.Deserialize<Event>(requestBody, new JsonSerializerOptions()
+					{
+						PropertyNameCaseInsensitive = true,
+					});
+
+				}
+
+				Event savedEvent = await eventsService.UpdateEvent(updateEvent);
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.Created);
+				await response.WriteAsJsonAsync(savedEvent);
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				this.logger.LogError("Error : {ex.Message}", ex.Message);
+
+				HttpResponseData response = req.CreateResponse(HttpStatusCode.InternalServerError);
+				response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+				response.Body = new MemoryStream(Encoding.UTF8.GetBytes($"Error {ex.Message}"));
+
+				return response;
+			}
+		}
 	}
 }

@@ -13,5 +13,7 @@ namespace DI2P2EvalBack.Services.Contracts
 		Task<Event> AddEvent(EventDtoUp newEvent);
 
 		Task<List<Event>> GetAllEvents();
+
+		Task<Event> UpdateEvent(Event updatedEvent);
 	}
 }

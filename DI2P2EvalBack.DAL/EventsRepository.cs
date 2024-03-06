@@ -25,5 +25,18 @@ namespace DI2P2EvalBack.DAL
 		{
 			return await contextModels.Events.ToListAsync();
 		}
+
+		public async Task<Event?> GetEventById(int id)
+		{
+			return await contextModels.Events.AsNoTracking().SingleOrDefaultAsync(e => e.Id == id);
+		}
+
+		public async Task<Event> UpdateEvent(Event updatedEvent)
+		{
+			var eventEntry = contextModels.Events.Update(updatedEvent);
+			await contextModels.SaveChangesAsync();
+
+			return eventEntry.Entity;
+		}
 	}
 }
